@@ -1,9 +1,15 @@
 <template>
   <div class="products">
     <div class="products__header">
-      <SelectedList :items="selectedItems" />
+      <SelectedList
+        :items="selectedItems"
+        @toggle="item => selectItem(item, SelectionTypeEnum.multiple)"
+      />
       <h1>Product page</h1>
-      <SelectedPreview :item="selectedItem" />
+      <SelectedPreview
+        :item="selectedItem"
+        @toggle="item => selectItem(item, SelectionTypeEnum.single)"
+      />
     </div>
 
     <div class="products__main">
@@ -23,7 +29,7 @@ import SelectedList from "@/components/Selected/SelectedList";
 import SelectedPreview from "@/components/Selected/SelectedPreview";
 import { onMounted, computed } from "vue";
 import { useProductStore, ProductStore } from "@/stores";
-import { Product, SelectionType } from "@/types";
+import { Product, SelectionType, SelectionTypeEnum } from "@/types";
 
 const leftCategories = ["electronics", "men's clothing"];
 const rightCategories = ["jewelery", "women's clothing"];
@@ -40,12 +46,12 @@ const singleSelectedIds = computed(() => {
 
 const sections = computed(() => [
   {
-    type: "multiple" as SelectionType,
+    type: SelectionTypeEnum.multiple as SelectionType,
     items: leftCategories.flatMap(i => productStore.getProductsByCategory(i)),
     selectedIds: productStore.selectedProductsIds,
   },
   {
-    type: "single" as SelectionType,
+    type: SelectionTypeEnum.single as SelectionType,
     items: rightCategories.flatMap(i => productStore.getProductsByCategory(i)),
     selectedIds: singleSelectedIds.value,
   },

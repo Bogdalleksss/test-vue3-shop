@@ -7,6 +7,7 @@
         :img="item.image"
         :label="item.name"
         mode="small"
+        @click="emit('toggle', item)"
       />
     </div>
     <div class="selected-list__count">
@@ -24,7 +25,12 @@ interface Props {
   items: Product[];
 }
 
+interface Emits {
+  (event: "toggle", product: Product): void;
+}
+
 const props = defineProps<Props>();
+const emit = defineEmits<Emits>();
 </script>
 
 <style lang="scss" scoped>
