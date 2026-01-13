@@ -5,6 +5,7 @@
       :img="props.item.image"
       :label="props.item.name"
       mode="big"
+      @click="emit('toggle', props.item)"
     />
     <p
       v-else
@@ -23,7 +24,12 @@ interface Props {
   item: Product | null;
 }
 
+interface Emits {
+  (event: "toggle", product: Product): void;
+}
+
 const props = defineProps<Props>();
+const emit = defineEmits<Emits>();
 </script>
 
 <style lang="scss" scoped>

@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
-import { Product, SelectionType } from "@/types";
+import { Product, SelectionType, SelectionTypeEnum } from "@/types";
 import { productApi } from "@/api";
 import { MAX_SELECTED_PRODUCTS } from "@/contstants";
 
@@ -35,11 +35,11 @@ export const useProductStore = defineStore("product", () => {
 
   const toggleProduct = (product: Product, type: SelectionType) => {
     switch (type) {
-      case "single": {
+      case SelectionTypeEnum.single: {
         currentProduct.value = currentProduct.value?.id === product.id ? null : product;
         break;
       }
-      case "multiple": {
+      case SelectionTypeEnum.multiple: {
         const isAlreadySelected = selectedProducts.value.some(p => p.id === product.id);
 
         if (isAlreadySelected) {
